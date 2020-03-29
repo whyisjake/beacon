@@ -15,13 +15,16 @@ server.route({
 
 server.route({
   method: 'GET',
-  path: '/example',
-  handler: (request, h) => { // eslint-disable-line no-unused-vars
+  path: '/search',
+  handler: async (request, h) => { // eslint-disable-line no-unused-vars
     const opts = {
       chromeFlags: ['--headless'],
     };
-    // console.log(request.url.searchParams.URLSearchParams);
-    return lighthouseApi.getResults('https://conde.io', opts);
+    const { url } = request.query;
+    const audits = await lighthouseApi.getResults(url, opts);
+    const response = h.response(audits);
+    response.header('content-type', 'application/json');
+    return response;
   },
 });
 
