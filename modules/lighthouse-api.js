@@ -23,12 +23,10 @@ function launchChromeAndRunLighthouse(url, opts, config = null) {
 function getResults(url, opts) {
   return client.get(url, (err, data) => {
     if (err || data === null) {
-      console.log('We need to get the data');
+      console.log( 'We need to get the data for ' + url);
       return launchChromeAndRunLighthouse(url, opts);
     }
-
-    const json = JSON.parse(data);
-    return json;
+    return data;
   });
 }
 

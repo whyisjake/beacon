@@ -19,11 +19,12 @@ server.route({
   handler: async (request, h) => { // eslint-disable-line no-unused-vars
     const opts = {
       chromeFlags: ['--headless'],
+      output: 'html',
     };
     const { url } = request.query;
     const audits = await lighthouseApi.getResults(url, opts);
     const response = h.response(audits);
-    response.header('content-type', 'application/json');
+    // response.header('content-type', 'application/html');
     return response;
   },
 });
