@@ -2,7 +2,7 @@
   "name": "beacon",
   "version": "0.0.1",
   "description": "VIP performance API for Lighthouse",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "npx nodemon server.js"
   },
