@@ -1,6 +1,7 @@
 const lighthouse = require('lighthouse');
 const chromeLauncher = require('chrome-launcher');
 const Redis = require('ioredis');
+const resizer = require('../lib/iframeResizer.contentWindow.min.js');
 
 const client = new Redis();
 
@@ -12,8 +13,9 @@ function launchChromeAndRunLighthouse(url, opts, config = null) {
       // https://github.com/GoogleChrome/lighthouse/blob/master/types/lhr.d.ts
       // use results.report for the HTML/JSON/CSV output as a string
       // use results.artifacts for the trace/screenshots/other specific case you need (rarer)
+      // The resizer script is allows some comms between the iframe window so it can be resized.
       chrome.kill().then(() => {
-        client.set(url, results.report, () => {
+        client.set(url, results.report + resizer.script, () => {
           return results.lhr;
         });
       }));
